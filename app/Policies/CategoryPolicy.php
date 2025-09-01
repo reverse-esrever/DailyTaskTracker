@@ -11,14 +11,12 @@ class CategoryPolicy
 {
     public function create(User $user): bool
     {
-        return (bool) $user->id;
+        return true;
     }
 
-    public function update(User $user, Category $category): Response
+    public function update(User $user, Category $category): bool
     {
-        return $user->id === $category->user_id
-            ? Response::allow()
-            : Response::deny();
+        return $user->id === $category->user_id;
     }
     
     public function delete(User $user, Category $category): bool

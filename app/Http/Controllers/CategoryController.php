@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Category\DeleteCategoryRequest;
 use App\Http\Requests\Category\StoreCategoryRequest;
 use App\Http\Requests\Category\UpdateCategoryRequest;
 use App\Models\Category;
@@ -48,8 +49,6 @@ class CategoryController extends Controller
 
     public function update(UpdateCategoryRequest $request, Category $category)
     {
-        $this->service->checkPolicy('update', $request, $category);
-        
         $data = $request->validated();
         
         $this->service->update($category,$data);
@@ -57,10 +56,10 @@ class CategoryController extends Controller
         return redirect()->back();
     }
     
-    public function destroy(Request $request, Category $category)
-    {
-        $this->service->checkPolicy('delete', $request, $category);
-        
+    public function destroy(DeleteCategoryRequest $request, Category $category)
+    {        
         $this->service->delete($category);
+
+        return redirect()->back();
     }
 }

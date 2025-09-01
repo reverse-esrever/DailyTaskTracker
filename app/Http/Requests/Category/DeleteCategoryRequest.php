@@ -5,7 +5,7 @@ namespace App\Http\Requests\Category;
 use App\Models\Category;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateCategoryRequest extends FormRequest
+class DeleteCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class UpdateCategoryRequest extends FormRequest
     public function authorize(): bool
     {
         $category = $this->route('category');
-        return $category && $this->user()->can('update', $category);
+        return $category && $this->user()->can('delete', $category);
     }
 
     /**
@@ -24,7 +24,7 @@ class UpdateCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "name" => "required|min:3|max:100",
+            //
         ];
     }
 }

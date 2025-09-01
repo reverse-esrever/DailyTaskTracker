@@ -20,11 +20,8 @@ class CategoryService
     }
     public function delete(Category $category): void{
         $category->delete();
+        Session::flash('CategoryDeleted');
     }
     
-    public function checkPolicy(string $action, Request $request, ?Category $category = null){
-        if(! $request->user()->can($action, $category ?: Category::class)){
-            abort(403);
-        }
-    }
+    
 }
