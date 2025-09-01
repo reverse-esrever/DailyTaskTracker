@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Category\StoreCategoryRequest;
+use App\Http\Requests\Category\UpdateCategoryRequest;
 use App\Models\Category;
 use App\Services\CategoryService;
 use Illuminate\Http\Request;
@@ -16,12 +17,14 @@ class CategoryController extends Controller
 
     public function index()
     {
-        
+        $categories = Category::all();
+
+        return view('categories.index', compact('categories'));
     }
 
     public function create()
     {
-        //
+        return view('categories.create');
     }
 
     public function store(StoreCategoryRequest $request)
@@ -29,6 +32,8 @@ class CategoryController extends Controller
         $data = $request->validated();
 
         $this->service->store($data);
+
+        return redirect()->back();
     }
 
     public function show(string $id)
@@ -36,18 +41,20 @@ class CategoryController extends Controller
         //
     }
 
-    public function edit(string $id)
+    public function edit(Category $category)
     {
-        //
+        return view('categories.edit',compact('category'));
     }
 
-    public function update(Request $request, Category $category)
+    public function update(UpdateCategoryRequest $request, Category $category)
     {
         $this->service->checkPolicy('update', $request, $category);
         
         $data = $request->validated();
         
-        $this->service->update($data);
+        $this->service->update($category,$data);
+
+        return redirect()->back();
     }
     
     public function destroy(Request $request, Category $category)
