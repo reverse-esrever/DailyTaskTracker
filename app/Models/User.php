@@ -50,4 +50,9 @@ class User extends Authenticatable
     public function categories(): HasMany{
         return $this->hasMany(Category::class);
     }
+
+    public function tasks(): HasMany
+    {
+        return $this->hasMany(Task::class);
+    }
 }
