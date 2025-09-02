@@ -3,7 +3,7 @@
 
 @section('content')
 <div>
-    <div class="container mx-auto">
+    <div class="container">
         <h1 class="text-2xl font-bold mb-5">Создать категорию</h1>
         <form action="{{ route('categories.store') }}" method="POST">
             @csrf

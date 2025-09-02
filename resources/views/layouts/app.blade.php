@@ -9,6 +9,10 @@
 
 </head>
 <body>
+    <div>
+        <a href="{{route('categories.index')}}">Категории</a>
+        <a href="{{route('profile.edit')}}">Профиль</a>
+    </div>
     @yield('content')
 </body>
 </html>
