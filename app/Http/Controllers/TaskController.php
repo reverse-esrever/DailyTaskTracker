@@ -17,7 +17,6 @@ class TaskController extends Controller
 
     public function index(){
         $tasks = $this->service->getAllUserTasks();
-
         return view('tasks.index', compact('tasks'));
     }
     public function create(){
@@ -27,11 +26,11 @@ class TaskController extends Controller
         $data = $request->validated();
 
         $this->service->store($data);
-
+        
         return redirect()->back();
     }
-    public function edit(){
-        return view('tasks.edit');
+    public function edit(Request $request,Task $task){
+        return view('tasks.edit', compact('task'));
     }
     public function update(UpdateTaskRequest $request, Task $task){
 
@@ -40,12 +39,18 @@ class TaskController extends Controller
         $this->service->update($task ,$data);
 
         return redirect()->back();
-
+        
     }
     public function destroy(Task $task){
+        
         $this->service->delete($task);
+        
+        return redirect()->back();
     }
     public function changeComplition(Task $task){
+
         $this->service->changeComplition($task);
+        
+        return redirect()->back();
     }
 }

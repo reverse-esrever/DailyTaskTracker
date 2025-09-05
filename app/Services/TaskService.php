@@ -13,11 +13,12 @@ class TaskService
 {
     public function getAllUserTasks(): Collection
     {
-        return Task::where('id', 'user_id')->get();
+        return Auth::user()->tasks;
     }
     public function store(array $data): void
     {
-        $data['user_id'] = Auth::user();
+        
+        $data['user_id'] = Auth::id();
         Task::create($data);
         Session::flash('TaskCreated');
     }
@@ -33,9 +34,12 @@ class TaskService
     }
     public function changeComplition(Task $task): void
     {
-        is_null($task->complited_at) 
-            ? $task->complited_at = Carbon::now() 
-            : $task->complited_at = null;
+        Gate::authorize('update', $task);
+        
+        is_null($task->completed_at) 
+            ? $task->completed_at = Carbon::now() 
+            : $task->completed_at = null;
+        $task->save();
         Session::flash("TaskStatusChanged");
     }
 }

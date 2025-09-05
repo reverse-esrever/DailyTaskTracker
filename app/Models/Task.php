@@ -3,9 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Task extends Model
 {
-    protected $fillable = ['title', 'description','due_date','completed_at','user_id','category_id'];
-    
+    protected $fillable = ['name', 'description', 'due_date', 'completed_at', 'user_id', 'category_id'];
+
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class);
+    }
 }

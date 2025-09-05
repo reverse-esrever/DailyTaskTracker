@@ -11,6 +11,7 @@
 <body>
     <div>
         <a href="{{route('categories.index')}}">Категории</a>
+        <a href="{{route('tasks.index')}}">Задачи</a>
         <a href="{{route('profile.edit')}}">Профиль</a>
     </div>
     @yield('content')

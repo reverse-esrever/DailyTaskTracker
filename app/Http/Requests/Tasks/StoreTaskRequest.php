@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Tasks;
 
+use App\Models\Task;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreTaskRequest extends FormRequest
@@ -11,8 +12,7 @@ class StoreTaskRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        $task = $this->route('task');
-        return $task && $this->user()->can('create', $task);
+        return $this->user()->can('create', Task::class);
     }
 
     /**
@@ -23,7 +23,7 @@ class StoreTaskRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|min:3|max:100',
+            'name' => 'required|min:3|max:100',
             'description' => 'required|min:3|max:250',
             'due_date' => 'required|date',
             'category_id' => 'required',
