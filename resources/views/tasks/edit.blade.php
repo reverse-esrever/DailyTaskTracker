@@ -1,6 +1,6 @@
-@extends('layouts.app')
+@extends('layouts.dashboard')
 
-@section('content')
+@section('dashboardContent')
     <div class="container mx-auto">
         @session('TaskUpdated')
             <div class="text-green-500">Задача успешно обновлена!</div>

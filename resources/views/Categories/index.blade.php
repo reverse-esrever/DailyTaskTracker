@@ -1,7 +1,7 @@
 <div>
-    @extends('layouts.app')
+    @extends('layouts.dashboard')
 
-    @section('content')
+    @section('dashboardContent')
         <div class="container mx-auto">
             <h1 class="text-2xl font-bold mb-5">Список категорий</h1>
             <a href="{{ route('categories.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded">Создать категорию</a>

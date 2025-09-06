@@ -15,6 +15,41 @@ class TaskService
     {
         return Auth::user()->tasks;
     }
+    public function getUpcomingTasks(): Collection
+    {
+        return Auth::user()->tasks()
+        ->where('due_date', '=', Carbon::today())
+        ->where('completed_at', "=", null)
+        ->get();
+    }
+
+    public function countCompletedTasks(): int
+    {
+        return Auth::user()->tasks()
+            ->where('completed_at', "<>", null)
+            ->count();
+    }
+    public function countOverdueTasks(): int
+    {
+        return Auth::user()->tasks()
+        ->where('due_date', '<', Carbon::today())
+        ->where('completed_at', "=", null)
+        ->count();
+    }
+    public function countUpcomingTasks(): int
+    {
+        return Auth::user()->tasks()
+        ->where('due_date', '=', Carbon::today())
+        ->where('completed_at', "=", null)
+        ->count();
+    }
+    public function getSummaryInfo(): array{
+        $info['all'] = Auth::user()->tasks()->count();
+        $info['completed'] = $this->countCompletedTasks();
+        $info['overdue'] = $this->countOverdueTasks();
+        $info['upcoming'] = $this->countUpcomingTasks();
+        return $info;
+    }
     public function store(array $data): void
     {
         

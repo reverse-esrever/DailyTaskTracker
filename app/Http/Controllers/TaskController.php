@@ -7,6 +7,7 @@ use App\Http\Requests\Tasks\UpdateTaskRequest;
 use App\Models\Task;
 use App\Services\TaskService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 class TaskController extends Controller
 {
@@ -16,8 +17,19 @@ class TaskController extends Controller
     }
 
     public function index(){
+        
         $tasks = $this->service->getAllUserTasks();
-        return view('tasks.index', compact('tasks'));
+
+        $info = $this->service->getSummaryInfo();
+
+        return view('tasks.index', compact('info', 'tasks'));
+    }
+    public function indexUpcoming(){
+        $tasks = $this->service->getUpcomingTasks();
+
+        $info = $this->service->getSummaryInfo();
+
+        return view('tasks.index', compact('info', 'tasks'));
     }
     public function create(){
         return view('tasks.create');

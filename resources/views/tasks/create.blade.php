@@ -1,6 +1,6 @@
-@extends('layouts.app')
+@extends('layouts.dashboard')
 
-@section('content')
+@section('dashboardContent')
     <div class="container mx-auto">
         <h1 class="text-xl font-bold mb-4">Создание задачи</h1>
         <form action="{{ route('tasks.store') }}" method="POST">
