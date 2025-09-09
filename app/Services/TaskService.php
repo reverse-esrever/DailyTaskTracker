@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Filters\Filter;
+use App\Filters\TaskFilter;
 use App\Models\Task;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
@@ -11,8 +13,18 @@ use Illuminate\Support\Facades\Session;
 
 class TaskService
 {
-    public function getAllUserTasks(): Collection
+    public function __construct(public TaskFilter $filter)
     {
+        
+    }
+
+    public function getAllUserTasks(?array $filterParams = null): Collection
+    {
+        if(!empty($filterParams)){
+            $tasks = $this->filter->getFilteredItems($filterParams);
+            Session::flashInput($filterParams);
+            return $tasks;
+        }
         return Auth::user()->tasks;
     }
     public function getUpcomingTasks(): Collection

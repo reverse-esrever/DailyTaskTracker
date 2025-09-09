@@ -2,34 +2,44 @@
 
 namespace App\Http\Controllers;
 
+use App\Filters\TaskFilter;
+use App\Http\Requests\Tasks\FilterTaskRequest;
 use App\Http\Requests\Tasks\StoreTaskRequest;
 use App\Http\Requests\Tasks\UpdateTaskRequest;
 use App\Models\Task;
+use App\Services\CategoryService;
 use App\Services\TaskService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Request as FacadesRequest;
 use Illuminate\Support\Facades\Route;
 
 class TaskController extends Controller
 {
-    public function __construct(public TaskService $service)
+    public function __construct(public TaskService $service, public CategoryService $categoryService)
     {
         
     }
 
-    public function index(){
+    public function index(FilterTaskRequest $request){
+        $filterParams = $request->validated();
+        dump($filterParams);
+
+
+        $tasks = $this->service->getAllUserTasks($filterParams);
+
+        $categories = $this->categoryService->getCurrentUsersCategories();
         
-        $tasks = $this->service->getAllUserTasks();
-
         $info = $this->service->getSummaryInfo();
-
-        return view('tasks.index', compact('info', 'tasks'));
+        
+        return view('tasks.index', compact('info', 'tasks', 'categories'));
     }
     public function indexUpcoming(){
         $tasks = $this->service->getUpcomingTasks();
-
+        
         $info = $this->service->getSummaryInfo();
-
-        return view('tasks.index', compact('info', 'tasks'));
+        
+        $categories = $this->categoryService->getCurrentUsersCategories();
+        return view('tasks.index', compact('info', 'tasks', 'categories'));
     }
     public function create(){
         return view('tasks.create');

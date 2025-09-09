@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Category;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -21,6 +22,10 @@ class CategoryService
     public function delete(Category $category): void{
         $category->delete();
         Session::flash('CategoryDeleted');
+    }
+
+    public function getCurrentUsersCategories(): Collection{
+        return Auth::user()->categories;
     }
     
     
