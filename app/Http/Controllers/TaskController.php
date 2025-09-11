@@ -22,8 +22,6 @@ class TaskController extends Controller
 
     public function index(FilterTaskRequest $request){
         $filterParams = $request->validated();
-        dump($filterParams);
-
 
         $tasks = $this->service->getAllUserTasks($filterParams);
 
@@ -31,14 +29,6 @@ class TaskController extends Controller
         
         $info = $this->service->getSummaryInfo();
         
-        return view('tasks.index', compact('info', 'tasks', 'categories'));
-    }
-    public function indexUpcoming(){
-        $tasks = $this->service->getUpcomingTasks();
-        
-        $info = $this->service->getSummaryInfo();
-        
-        $categories = $this->categoryService->getCurrentUsersCategories();
         return view('tasks.index', compact('info', 'tasks', 'categories'));
     }
     public function create(){

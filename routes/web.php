@@ -29,7 +29,6 @@ Route::prefix('/categories')->group(function () {
 Route::prefix('/tasks')->group(function () {
     Route::middleware("auth")->group(function () {
         Route::get("/", [TaskController::class, 'index'])->name('tasks.index');
-        Route::get("/upcoming", [TaskController::class, 'indexUpcoming'])->name('tasks.index.upcoming');
         Route::get("/create", [TaskController::class, 'create'])->name('tasks.create');
         Route::post("/", [TaskController::class, 'store'])->name('tasks.store');
         Route::get("/{task}/edit", [TaskController::class, 'edit'])->name('tasks.edit');
