@@ -40,7 +40,7 @@ class TaskController extends Controller
 
         $this->service->store($data);
         
-        return redirect()->back();
+        return redirect()->back(201);
     }
     public function edit(Request $request,Task $task){
         return view('tasks.edit', compact('task'));
